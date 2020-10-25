@@ -1,12 +1,16 @@
 #include "handstack.hpp"
+#include <iostream>
 
-Handstack::Handstack(){}
+Handstack::Handstack() {}
 
-void Handstack::draw(Cardstack others){
-    Card* temp = others.drawn();
+void Handstack::draw(Cardstack others) {
+    Card *temp = others.drawn();
+    std::cout << "Drawing\n";
+    temp->printCard();
     this->insert(temp);
 }
 
+<<<<<<< HEAD
 void Handstack::insert(Card* temp){
     this->hand.push_back(temp);
 }
@@ -20,4 +24,20 @@ void Handstack::throw_away(unsigned int index, Cardstack other){
 
 void list_card(){
     
+=======
+void Handstack::insert(Card *temp) {
+    hand.push_back(temp);
+}
+
+void Handstack::throw_away(unsigned int index, Cardstack) {
+    hand.erase(hand.begin() + index);
+}
+
+void Handstack::list_card() {
+    std::vector<Card *>::iterator it;
+    std::cout << "Your hand contains: \n";
+    for (it = hand.begin(); it < hand.end(); it++) {
+        (*it)->printCard();
+    }
+>>>>>>> 9bbc9d03fac906b4bcf4a13c4ffd6d24daa8f6fb
 }
