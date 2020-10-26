@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string.h>
+#include <sstream>
 
 Card::Card(unsigned int kd, unsigned int nr) : kingdom(kd), number(nr) {
     if (kd < 1 || kd > 4) {
@@ -36,16 +37,28 @@ unsigned int Card::get_number() {
     return number;
 }
 
-void Card::printCard() {
+std::string Card::get_name(){
     std::map<int, std::string> kingdom_names = {
         {1, "Clubs"},
         {2, "Diamonds"},
         {3, "Hearts"},
         {4, "Spades"},
     };
-    std::cout << number << " of " << kingdom_names[kingdom] << std::endl;
+    std::map<int, std::string> number_names = {
+        {1, "Ace"}, {2, "2"}, {3, "3"},
+        {4, "4"}, {5, "5"}, {6, "6"}, {7, "7"},
+        {8, "8"}, {9, "9"}, {10, "10"}, {11, "Jack"},
+        {12, "Queen"}, {13, "King"},
+    };
+    std::stringstream ss;
+    ss << number_names[number] << " of " << kingdom_names[kingdom];
+    return ss.str();
+}
+
+void Card::printCard() {
+    std::cout << get_name() << std::endl;
 }
 
 Card::~Card() {
-    std::cout << "Card has been burned" << std::endl;
+    std::cout << get_name() << " has been burned" << std::endl;
 }

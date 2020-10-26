@@ -13,6 +13,8 @@ class Player{
 
     public:
         Player();
+        void calculate_score();
+        void draw();
         ~Player();
 };
 

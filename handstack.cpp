@@ -3,34 +3,20 @@
 
 Handstack::Handstack() {}
 
-void Handstack::draw(Cardstack others) {
+void Handstack::draw(Cardstack &others) {
     Card *temp = others.drawn();
-    std::cout << "Drawing\n";
-    temp->printCard();
+    std::cout << "Drawing: " << temp->get_name() << std::endl;
     this->insert(temp);
 }
 
-<<<<<<< HEAD
-void Handstack::insert(Card* temp){
-    this->hand.push_back(temp);
-}
-
-void Handstack::throw_away(unsigned int index, Cardstack other){
-    //throw away the i-th card in hand (starts from 0)
-    Card* temp = this->hand[index];                 //copy card into a pointer
-    this->hand.erase(this->hand.begin()+index);     //remove card from vector
-    other.insert(temp);                             //insert card into stack
-}
-
-void list_card(){
-    
-=======
 void Handstack::insert(Card *temp) {
     hand.push_back(temp);
 }
 
-void Handstack::throw_away(unsigned int index, Cardstack) {
-    hand.erase(hand.begin() + index);
+void Handstack::throw_away(unsigned int index, Cardstack &other) {
+    Card* temp = hand[index];               //add 2nd Pointer to elemetn
+    hand.erase(hand.begin() + index);       //remove first pointer
+    other.insert(temp);
 }
 
 void Handstack::list_card() {
@@ -39,5 +25,12 @@ void Handstack::list_card() {
     for (it = hand.begin(); it < hand.end(); it++) {
         (*it)->printCard();
     }
->>>>>>> 9bbc9d03fac906b4bcf4a13c4ffd6d24daa8f6fb
+}
+
+Handstack::~Handstack(){
+    std::vector<Card*>::iterator it=hand.begin();
+    for(it; it<hand.end(); it++){
+        (*it)->~Card();
+    }
+    std::cout << "Your Hand just got burned!" << std::endl <<std::endl;
 }

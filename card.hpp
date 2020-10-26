@@ -1,5 +1,6 @@
 #ifndef CARD_HPP
 #define CARD_HPP
+#include <string>
 
 class Card{
     private:
@@ -13,7 +14,9 @@ class Card{
         unsigned int get_worth();               //getter for worth
         unsigned int get_kingdom();             //getter for kingdom
         unsigned int get_number();              //getter for number
+        std::string get_name();                 //get name as string
         void printCard();
+        
         ~Card();                                //destructor              
 };
 

@@ -54,5 +54,9 @@ Card *Cardstack::drawn() {
 }
 
 Cardstack::~Cardstack() {
-    std::cout << "You have witness a Stack of Card get burned" << std::endl;
+    std::list<Card*>::iterator it = stack.begin();
+    for(it ; it != stack.end();it++){
+        (*it)->~Card();
+    }
+    std::cout << "You have witness a Stack of Card get burned" << std::endl <<std::endl;
 }
