@@ -44,11 +44,11 @@ void Cardstack::insert(Card *toInsert) {
 }
 
 Card *Cardstack::show_top() {
-    return stack.front();
+    return this->stack.front();
 }
 
 Card *Cardstack::drawn() {
-    Card *temp = show_top();
+    Card *temp = this->stack.front();
     this->stack.pop_front();
     return temp;
 }
