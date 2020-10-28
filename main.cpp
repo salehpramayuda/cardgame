@@ -7,7 +7,7 @@ int main() {
     cout << "Let's start the game!\n";
 
     Match game;
-    game.start_match(1);
+    game.start_match(2);
 
     return 0;
 }

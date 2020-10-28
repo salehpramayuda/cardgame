@@ -16,7 +16,7 @@ class Card{
         unsigned int get_number();              //getter for number
         std::string get_name();                 //get name as string
         void printCard();
-        
+        bool compare(Card*);
         ~Card();                                //destructor              
 };
 

@@ -68,6 +68,27 @@ void Card::printCard() {
     std::cout << get_name() << std::endl;
 }
 
+bool Card::compare(Card* other){
+    if(worth>other->get_worth()){
+        return true;
+    }
+    else{
+        if(worth==other->get_worth()){
+            if(number>other->get_number()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+}
+
 Card::~Card() {
     // Commented for debugging purposes
     // std::cout << get_name() << " has been burned" << std::endl;

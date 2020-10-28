@@ -53,6 +53,10 @@ Card *Cardstack::drawn() {
     return temp;
 }
 
+unsigned int Cardstack::get_size(){
+    return stack.size();
+}
+
 Cardstack::~Cardstack() {
     std::list<Card*>::iterator it = stack.begin();
     for(it ; it != stack.end();it++){

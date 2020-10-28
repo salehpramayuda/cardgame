@@ -10,10 +10,33 @@ void Match::start_match(unsigned int player_count) {
     };
     std::cout << players.size() << std::endl;
     current_player = 0;
+    set_order(current_player);
     printf("Game has started \n");
-    while (true) {
-        process_turn();
+    bool game = true;
+    while (game) {
+        turn();
     };
+}
+
+void Match::set_order(unsigned int number){
+    if(!order.empty()){
+        int size = order.size();
+        for(int i=0; i<size; i++){
+            order.erase(order.begin());
+        }
+    }
+    int i = number;
+    std::cout << number << std::endl;
+    for(i; i< players.size(); i++){
+        order.push_back(i);
+    }
+    for(int j = 0; j<number; j++){
+        order.push_back(j);
+    }
+    std::vector<unsigned int>::iterator ip;
+    for(ip=order.begin();ip!=order.end();ip++){
+        std::cout<<*ip;
+    }
 }
 
 void Match::initialize_player() {
@@ -25,14 +48,32 @@ void Match::initialize_player() {
     players.push_back(player);
 }
 
+void Match::turn(){                 // separated from process_turn
+    process_turn();     // will always be called until input has been safely made
+    end_turn(skip);                    // player decided to skip
+}
+
 void Match::process_turn() {
     printf("\n");
+    std::cout << "Player " << order[current_player] << "'s Turn:" << std::endl;
     int input;
     input = wait_for_input();
-    int hand_size = players[current_player]->get_hand_size();
-    if (input <= hand_size) {
-        submit_card(input);
-        end_turn();
+    int hand_size = players[order[current_player]]->get_hand_size();
+    if (input < hand_size+2) {
+        if(input < hand_size){
+            skip = false;
+            submit_card(input);
+        }
+        else{
+            if(input == hand_size){
+                players[order[current_player]]->draw(deck);
+                process_turn();
+            }
+            else{
+                std::cout<<"You passed your turn!"<<std::endl;
+                skip = true;
+            } 
+        }
     } else {
         printf("Invalid input \n");
         process_turn();
@@ -40,7 +81,9 @@ void Match::process_turn() {
 }
 
 int Match::wait_for_input() {
-    players[current_player]->list_card();
+    players[order[current_player]]->list_card();
+    std::cout << players[order[current_player]]->get_hand_size()<< ": Draw from deck" << std::endl;
+    std::cout << players[order[current_player]]->get_hand_size()+1<< ": Pass your turn" << std::endl;
     std::string i;
     std::cout << "Which card do you want to play? ";
     std::cin >> i;
@@ -48,21 +91,37 @@ int Match::wait_for_input() {
 }
 
 void Match::submit_card(unsigned int chosen_card) {
-    players[current_player]->submit_card(chosen_card, table_pile);
+    if(!players[order[current_player]]->submit_card(chosen_card, table_pile)){
+        process_turn();
+    }
 }
 
-void Match::end_turn() {
-    calculate_score();
-    if (players.size() < current_player + 1) {
+void Match::end_turn(bool skip) {
+    if(!skip){
+        calculate_score();
+        table_pile.set_winner(order[current_player]);
+    }
+    if (players.size() > current_player+1) {
         current_player += 1;
+    }
+    else{
+        next_round();
     }
 }
 
 void Match::calculate_score() {
-    if (players[current_player]->get_hand_size() == 0) {
+    if (players[order[current_player]]->get_hand_size() == 0) {
         printf("\nYou won!");
         exit(0);
     }
+}
+
+void Match::next_round(){
+    current_player = 0;
+    unsigned int winner = table_pile.reset_pile();
+    std::cout << "Winner of this round is Player " << winner <<"!\n";
+    std::cout << "Player " << winner << " will start first in the next round\n";
+    set_order(winner);
 }
 
 Match::~Match() {}
