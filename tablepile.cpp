@@ -58,7 +58,7 @@ unsigned int Tablepile::reset_pile(){
     winner = 0;
     biggest = NULL;
     attribute = 0;
-    std::list<Card*>::iterator it = stack.begin();
+    std::vector<Card*>::iterator it = stack.begin();
     for(it; it!=stack.end(); it++){
         (*it)->~Card();
     }
@@ -66,7 +66,7 @@ unsigned int Tablepile::reset_pile(){
 }
 
 Tablepile::~Tablepile(){
-    std::list<Card*>::iterator it = stack.begin();
+    std::vector<Card*>::iterator it = stack.begin();
     for(it; it!=stack.end(); it++){
         (*it)->~Card();
     }

@@ -90,6 +90,5 @@ bool Card::compare(Card* other){
 }
 
 Card::~Card() {
-    // Commented for debugging purposes
-    // std::cout << get_name() << " has been burned" << std::endl;
+    std::cout << get_name() << " has been burned" << std::endl;
 }

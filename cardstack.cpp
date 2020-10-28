@@ -7,40 +7,30 @@ Cardstack::Cardstack() {} //creates an empty cardstack
 
 void Cardstack::makeStack() {
     //generate all 52 Cards and ensure that no cards can be the same
-    srand(time(NULL));
-    int counter = 0;
-    while (counter < 52) {
-        bool not_exist = false;
-        unsigned int king_ran = (unsigned int)rand() % 4 + 1;
-        unsigned int nr_ran = (unsigned int)rand() % 13 + 1;
-        if (stack.empty()) {
-            Card *temp = new Card(king_ran, nr_ran);
-            stack.push_front(temp);
-        } else {
-            while (!not_exist) {
-                std::list<Card *>::iterator it = stack.begin();
-                while (it != stack.end() && !not_exist) {
-                    bool check_1 = ((*it)->get_kingdom() != king_ran); //iterator it must be dereference as a pointer first
-                    bool check_2 = ((*it)->get_number() != nr_ran);    //check if "card already exist"
-                    if (check_1 && check_2) {
-                        not_exist = true;
-                    }
-                    it++;
-                }
-                if (!not_exist) {
-                    king_ran = (unsigned int)rand() % 4 + 1;
-                    nr_ran = (unsigned int)rand() % 13 + 1;
-                }
-            }
-            Card *temp = new Card(king_ran, nr_ran);
-            stack.push_front(temp);
+    for(int i = 1; i < 5; i++){
+        for(int j = 1; j<14; j++){
+            Card* temp = new Card(i, j);
+            stack.insert(stack.begin(), temp);
         }
-        counter++;
+    }
+
+    //shuffle
+    int p = rand()%9;
+    srand(time(NULL));
+    while(p!=0){
+        for(int i = 0; i<=52; i++){
+            unsigned int index = rand()%52;
+            Card* temp = stack[index];
+            stack.erase(stack.begin()+index);
+            index = rand()%51+1;
+            stack.insert(stack.begin()+index, temp);
+        }
+        p--;
     }
 }
 
 void Cardstack::insert(Card *toInsert) {
-    this->stack.push_front(toInsert);
+    this->stack.insert(stack.begin(), toInsert);
 }
 
 Card *Cardstack::show_top() {
@@ -49,7 +39,7 @@ Card *Cardstack::show_top() {
 
 Card *Cardstack::drawn() {
     Card *temp = this->stack.front();
-    this->stack.pop_front();
+    this->stack.erase(stack.begin());
     return temp;
 }
 
@@ -58,7 +48,7 @@ unsigned int Cardstack::get_size(){
 }
 
 Cardstack::~Cardstack() {
-    std::list<Card*>::iterator it = stack.begin();
+    std::vector<Card*>::iterator it = stack.begin();
     for(it ; it != stack.end();it++){
         (*it)->~Card();
     }

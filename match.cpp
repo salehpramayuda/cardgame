@@ -8,7 +8,6 @@ void Match::start_match(unsigned int player_count) {
     for (int i = 0; i < player_count; i++) {
         initialize_player();
     };
-    std::cout << players.size() << std::endl;
     current_player = 0;
     set_order(current_player);
     printf("Game has started \n");
@@ -26,16 +25,11 @@ void Match::set_order(unsigned int number){
         }
     }
     int i = number;
-    std::cout << number << std::endl;
     for(i; i< players.size(); i++){
         order.push_back(i);
     }
     for(int j = 0; j<number; j++){
         order.push_back(j);
-    }
-    std::vector<unsigned int>::iterator ip;
-    for(ip=order.begin();ip!=order.end();ip++){
-        std::cout<<*ip;
     }
 }
 
@@ -120,8 +114,9 @@ void Match::next_round(){
     current_player = 0;
     unsigned int winner = table_pile.reset_pile();
     std::cout << "Winner of this round is Player " << winner <<"!\n";
-    std::cout << "Player " << winner << " will start first in the next round\n";
+    std::cout << "Player " << winner << " will start first in the next round\n\n";
     set_order(winner);
+    std::cout << "Next Round!\n";
 }
 
 Match::~Match() {}
