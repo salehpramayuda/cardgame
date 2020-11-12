@@ -1,34 +1,24 @@
-#include "arena.hpp"
+#include "renderer.hpp"
 
-Arena::Arena(){};
+Renderer::Renderer(std::vector<Card *> &vector) : hand(vector) {
+    card_index = -1;
+};
 
-void Arena::spawnCards(int amount) {
-    Vector2 pos = {100, 200};
-    Vector2 increment = {10, 6};
-    std::string path = "res/clover/card_1_clover.png";
-    for (int i = 0; i <= amount; i++) {
-        Rect *card = new Rect(pos.x, pos.y, 0, 0, path);
-        hand.insert(hand.begin(), card);
-        pos += increment;
-        std::cout << pos.x << " & " << pos.y << std::endl;
-    }
-}
-
-void Arena::renderCards() {
-    std::vector<Rect *>::iterator it;
+void Renderer::renderCards() {
+    std::vector<Card *>::iterator it;
     for (it = hand.begin(); it != hand.end(); it++) {
         (*it)->draw();
     }
 }
 
-void Arena::pollEvents(SDL_Event &event) {
+void Renderer::pollEvents(SDL_Event &event) {
     if (card_index != -1) {
         assignRenderPriority(*hand[card_index]);
         if (!hand[card_index]->pollEvents(event)) {
             card_index = -1;
         }
     } else {
-        std::vector<Rect *>::reverse_iterator it;
+        std::vector<Card *>::reverse_iterator it;
         for (it = hand.rbegin(); it != hand.rend(); it++) {
             if ((*it)->pollEvents(event)) {
                 card_index = hand.size() - 1 - std::distance(hand.rbegin(), it);
@@ -38,15 +28,15 @@ void Arena::pollEvents(SDL_Event &event) {
     }
 }
 
-Arena::~Arena() {
-    std::vector<Rect *>::iterator it;
+Renderer::~Renderer() {
+    std::vector<Card *>::iterator it;
     for (it = hand.begin(); it != hand.end(); it++) {
-        (*it)->~Rect();
+        (*it)->~Card();
     }
 }
 
-void Arena::assignRenderPriority(Rect &card) {
-    std::vector<Rect *>::iterator it;
+void Renderer::assignRenderPriority(Card &card) {
+    std::vector<Card *>::iterator it;
     int i = 0;
     for (it = hand.begin(); it != hand.end(); it++) {
         int card_reference_index = std::distance(hand.begin(), it);
@@ -60,5 +50,4 @@ void Arena::assignRenderPriority(Rect &card) {
             card_index = card_reference_index;
         }
     }
-    std::cout << " " << std::endl;
 };

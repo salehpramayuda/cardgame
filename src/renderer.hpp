@@ -1,24 +1,22 @@
 #pragma once
-#include "rect.hpp"
+#include "card.hpp"
 #include "text.hpp"
 #include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
-class Arena {
+class Renderer {
 public:
-    Arena();
-    ~Arena();
-    void spawnCards(int amount);
+    Renderer(std::vector<Card *> &vector);
+    ~Renderer();
     void renderCards();
     void pollEvents(SDL_Event &event);
 
-    std::vector<Rect *> hand;
-
 private:
+    std::vector<Card *> hand;
     int card_index;
 
 private:
-    void assignRenderPriority(Rect &card);
+    void assignRenderPriority(Card &card);
 };
