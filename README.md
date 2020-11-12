@@ -1,10 +1,10 @@
-# cardgame
-Playing Standard 52 Card Game
+# Cangkul Card Game
 
 How to compile:
 - Install SDL2, SDL2_image & SDL2_text
 - Copy vscode settings
 - Press F5 to debug. Currently compiled .exe files don't work with resources
+
 
 SDL2, SDL2_image & SDL2_text installation (mingw build):
 - Download:
