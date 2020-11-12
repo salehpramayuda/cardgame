@@ -1,13 +1,9 @@
 #include "window.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <iostream>
 
 SDL_Renderer *Window::renderer = nullptr;
 
 Window::Window(const std::string &title, int width, int height) : _title(title), _height(height), _width(width) {
-    _closed = !init();
+    _open = init();
 };
 
 Window::~Window() {
@@ -57,12 +53,12 @@ bool Window::init() {
 void Window::pollEvents(SDL_Event &event) {
     switch (event.type) {
     case SDL_QUIT:
-        _closed = true;
+        _open = false;
         break;
     case SDL_KEYDOWN:
         switch (event.key.keysym.sym) {
         case SDLK_ESCAPE:
-            _closed = true;
+            _open = false;
             break;
         }
     default:
@@ -70,7 +66,7 @@ void Window::pollEvents(SDL_Event &event) {
     }
 }
 
-void Window::clear() const {
+void Window::render() const {
     SDL_RenderPresent(renderer); // put everything to screen
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer); // get color on the renderer

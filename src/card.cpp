@@ -1,10 +1,6 @@
 #include "card.hpp"
-#include <iostream>
-#include <map>
-#include <sstream>
-#include <string.h>
 
-Card::Card(unsigned int kd, unsigned int nr) : kingdom(kd), number(nr) {
+Card::Card(unsigned int kd, unsigned int nr, int x, int y, const std::string &image_path) : Rect(x, y, image_path), kingdom(kd), number(nr) {
     if (kd < 1 || kd > 4) {
         std::cout << "Warning: False input of Kingdom: 0<Kingdom<5";
         this->Card::~Card(); //if condition not fulfilled, destroyed
@@ -68,25 +64,20 @@ void Card::printCard() {
     std::cout << get_name() << std::endl;
 }
 
-bool Card::compare(Card* other){
-    if(worth>other->get_worth()){
+bool Card::compare(Card *other) {
+    if (worth > other->get_worth()) {
         return true;
-    }
-    else{
-        if(worth==other->get_worth()){
-            if(number>other->get_number()){
+    } else {
+        if (worth == other->get_worth()) {
+            if (number > other->get_number()) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-    
 }
 
 Card::~Card() {

@@ -1,10 +1,8 @@
 #include "rect.hpp"
-#include <SDL2/SDL_image.h>
-#include <iostream>
-#include <stdlib.h>
 
-Rect::Rect(int x, int y, int w, int h, const std::string &image_path)
-    : _x(x), _y(y), _w(w), _h(h) {
+Rect::Rect(int x, int y, const std::string &image_path)
+    : _x(x), _y(y) {
+    position = {x, y};
     SDL_Surface *surface = IMG_Load(image_path.c_str());
     if (!surface) {
         std::cerr << "Failed to create surface.\n";
@@ -31,14 +29,21 @@ void Rect::draw() {
         SDL_RenderFillRect(Window::renderer, &rect);
     };
     if (_clicked) {
-        moveRect();
+        SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+        moveRect(mouse_pos);
     };
 }
 
-void Rect::moveRect() {
-    SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
-    _x = mouse_pos.x - delta.x;
-    _y = mouse_pos.y - delta.y;
+void Rect::moveRect(Vector2 pos) {
+    if (!_clicked) {
+        _x = pos.x;
+        _y = pos.y;
+        position = {_x, _y};
+        // std::cout << position.x << " " << position.y << std::endl;
+    } else {
+        _x = pos.x - delta.x;
+        _y = pos.y - delta.y;
+    }
 }
 
 bool Rect::pollEvents(SDL_Event &event) {

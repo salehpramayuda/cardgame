@@ -1,6 +1,9 @@
 #pragma once
 
 #include "window.hpp"
+#include <SDL2/SDL_image.h>
+#include <iostream>
+#include <stdlib.h>
 
 struct Vector2 {
     int x, y;
@@ -38,15 +41,12 @@ struct Vector2 {
 
 class Rect {
 public:
-    Rect(int x, int y, int w, int h,
-         const std::string &image_path);
+    Rect(int x, int y, const std::string &image_path);
     ~Rect();
     void draw();
+    void moveRect(Vector2 pos);
     bool pollEvents(SDL_Event &event);
     Vector2 position;
-
-private:
-    void moveRect();
 
 private:
     Vector2 delta;
