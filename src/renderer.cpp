@@ -68,11 +68,12 @@ void Renderer::assignRenderPriority(Card &card) {
     for (it = hand.begin(); it != hand.end(); it++) {
         int card_reference_index = std::distance(hand.begin(), it);
         bool higher_y = (card.position.y < (*it)->position.y);
+        bool same_y = (card.position.y == (*it)->position.y);
         bool higher_index = (card_reference_index > card_index);
         if (higher_y && higher_index) {
             std::swap((*it), hand[card_index]);
             card_index = card_reference_index;
-        } else if (!higher_y && !higher_index) {
+        } else if (!higher_y && !higher_index && !same_y) {
             std::swap((*it), hand[card_index]);
             card_index = card_reference_index;
         }

@@ -2,7 +2,7 @@
 
 SDL_Renderer *Window::renderer = nullptr;
 
-Window::Window(const std::string &title, int width, int height) : _title(title), _height(height), _width(width) {
+Window::Window(const std::string &title, Vector2 resolution) : _title(title), _height(resolution.y), _width(resolution.x) {
     _open = init();
 };
 

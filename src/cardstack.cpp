@@ -2,33 +2,37 @@
 
 Cardstack::Cardstack() {} //creates an empty cardstack
 
-void Cardstack::makeStack() {
+void Cardstack::makeStack(Vector2 pos) {
     //generate all 52 Cards and ensure that no cards can be the same
-    Vector2 pos = {50, 50};
+    Vector2 deviation = {40, 30};
+    pos = pos / 2 - deviation;
     std::string path;
     for (int i = 1; i < 5; i++) {
         for (int j = 1; j < 14; j++) {
             path = generateCardPath(i, j);
             Card *temp = new Card(i, j, pos.x, pos.y, path);
-            pos += 5;
             stack.insert(stack.begin(), temp);
+            // pos += 10;
         }
     }
+    shuffleStack();
+}
 
-    //shuffle
+void Cardstack::shuffleStack() {
+    // RENDER ORDER NOT KEPT
     int p = rand() % 9;
-    Vector2 card1_pos;
     srand(time(NULL));
     while (p != 0) {
         for (int i = 0; i <= 52; i++) {
             int index1 = rand() % 52;
             int index2 = rand() % 52;
-            Card *card1 = stack[index1];
-            Card *card2 = stack[index2];
-            std::swap(card1, card2);
-            card1_pos = card1->position;
-            card1->moveRect(card2->position);
-            card2->moveRect(card1_pos);
+            std::swap(stack[index1], stack[index2]);
+
+            // Card *card1 = stack[index1];
+            // Card *card2 = stack[index2];
+            // Vector2 card1_pos = card1->position;
+            // card1->moveRect(card2->position);
+            // card2->moveRect(card1_pos);
         }
         p--;
     }

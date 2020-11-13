@@ -5,9 +5,47 @@
 #include <iostream>
 #include <string>
 
+struct Vector2 {
+    int x, y;
+
+    // operator overloading
+    Vector2 operator+(const Vector2 &other) const {
+        return {x + other.x, y + other.y};
+    }
+    Vector2 operator*(const Vector2 &other) const {
+        return {x * other.x, y * other.y};
+    }
+    Vector2 operator-(const Vector2 &other) const {
+        return {x - other.x, y - other.y};
+    }
+    Vector2 operator/(const Vector2 &other) const {
+        return {x / other.x, y / other.y};
+    }
+    Vector2 operator/(const int &dividant) {
+        this->x = x / dividant;
+        this->y = y / dividant;
+        return *this;
+    }
+    Vector2 &operator+=(const int &increment) {
+        this->x += increment;
+        this->y += increment;
+        return *this;
+    }
+    Vector2 &operator+=(const Vector2 &increment) {
+        this->x += increment.x;
+        this->y += increment.y;
+        return *this;
+    }
+    Vector2 &operator-=(const int &increment) {
+        this->x -= increment;
+        this->y -= increment;
+        return *this;
+    }
+};
+
 class Window {
 public:
-    Window(const std::string &title, int width, int height);
+    Window(const std::string &title, Vector2 resolution);
     ~Window();
 
     void pollEvents(SDL_Event &event);

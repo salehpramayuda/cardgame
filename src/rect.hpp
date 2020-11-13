@@ -5,40 +5,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-struct Vector2 {
-    int x, y;
-
-    // operator overloading
-    Vector2 operator+(const Vector2 &other) const {
-        return {x + other.x, y + other.y};
-    }
-    Vector2 operator*(const Vector2 &other) const {
-        return {x * other.x, y * other.y};
-    }
-    Vector2 operator-(const Vector2 &other) const {
-        return {x - other.x, y - other.y};
-    }
-    Vector2 operator/(const Vector2 &other) const {
-        return {x / other.x, y / other.y};
-    }
-
-    Vector2 &operator+=(const int &increment) {
-        this->x += increment;
-        this->y += increment;
-        return *this;
-    }
-    Vector2 &operator+=(const Vector2 &increment) {
-        this->x += increment.x;
-        this->y += increment.y;
-        return *this;
-    }
-    Vector2 &operator-=(const int &increment) {
-        this->x -= increment;
-        this->y -= increment;
-        return *this;
-    }
-};
-
 class Rect {
 public:
     Rect(int x, int y, const std::string &image_path);

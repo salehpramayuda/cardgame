@@ -15,8 +15,9 @@ public:
     std::vector<Card *> stack; //contains Card-Pointer and not Card itself
 
 public:
-    Cardstack();             //creates an empty cardstack
-    void makeStack();        //for center Stack
+    Cardstack();                 //creates an empty cardstack
+    void makeStack(Vector2 res); //for center Stack
+    void shuffleStack();
     void insert(Card *);     //insert card into top of cardstack
     Card *show_top();        //getter for top Card
     Card *drawn();           //taking top card out of cardstack

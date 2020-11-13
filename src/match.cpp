@@ -11,8 +11,9 @@ void Match::pollEvents(Window &window, Renderer &renderer) { // Later, will be a
 }
 
 void Match::start_match(unsigned int player_count) {
-    Window window("Card game", 800, 600);
-    deck.makeStack();
+    Vector2 window_res = {800, 600};
+    Window window("Card game", window_res);
+    deck.makeStack(window_res);
     Renderer renderer(deck.stack);
 
     for (int i = 0; i < player_count; i++) {
