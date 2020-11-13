@@ -35,6 +35,33 @@ Renderer::~Renderer() {
     }
 }
 
+// // FAILED ATTEMPT
+// void Renderer::assignRenderPriority(Card &card) {
+//     std::vector<Card *>::iterator it;
+//     // Should only compare the front and back
+//     it = hand.begin() + card_index - 1;
+//     while (it <= hand.begin() + card_index + 2) {
+//         int card_reference_index = std::distance(hand.begin(), it);
+//         std::cout << card_reference_index << std::endl;
+//         if (card_reference_index <= hand.size() - 1) {
+//             std::cout << card_reference_index << std::endl;
+//             bool ypos_higher = (card.position.y < (*it)->position.y);
+//             bool index_higher = (card_reference_index > card_index);
+//             if (ypos_higher && index_higher) {
+//                 std::swap((*it), hand[card_index]);
+//                 card_index = card_reference_index;
+//                 std::cout << "Chosen card moved FRONT" << std::endl;
+//             } else if (!ypos_higher && !index_higher) {
+//                 std::swap((*it), hand[card_index]);
+//                 card_index = card_reference_index;
+//                 std::cout << "Chosen card moved BACK" << std::endl;
+//             }
+//             it += 2;
+//         }
+//         std::cout << " " << std::endl;
+//     }
+// }
+
 void Renderer::assignRenderPriority(Card &card) {
     std::vector<Card *>::iterator it;
     int i = 0;
